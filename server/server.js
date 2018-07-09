@@ -3,6 +3,8 @@ const path = require('path');
 const socketIO = require('socket.io');
 const http = require('http');
 
+const {generateMessage} = require('./utils/message.js');
+
 var app = express();
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname + './../public')));
@@ -16,26 +18,14 @@ io.on('connection', function(socket) {
     console.log("User Disconnected");
   });
 
-  socket.emit('newMessage', {
-    from: "Admin",
-    text: "Welcome to the chat app",
-    createdAt: new Date().getTime()
-  });
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
-  socket.broadcast.emit('newMessage', {
-    from: "Admin",
-    text: "New User Joined",
-    createdAt: new Date().getTime()
-  })
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User joined'));
 
   socket.on('createMessage', function(message) {
     console.log('createMessage', message);
 
-    io.emit('newMessage', {
-      from: message.from,
-      text: message.text,
-      createdAt: new Date().getTime()
-    });
+    io.emit('newMessage', generateMessage(message.from, message.text));
   });
 });
 

@@ -15,10 +15,17 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log("User Disconnected");
   });
-})
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, './../public', 'index.html'));
-// });
+
+  socket.emit('newMessage', {
+    from: "Tony",
+    text: "Hi Abhinav!",
+    createdAt: 123
+  });
+
+  socket.on('createMessage', function(message) {
+    console.log('createMessage', message);
+  });
+});
 
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);

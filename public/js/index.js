@@ -1,13 +1,38 @@
-var socket = io();
+var app = angular.module('gcta', []);
 
-socket.on('connect', function() {
-  console.log("Connected to Server");
-});
+app.controller('mainController', ['$scope', '$http', function($scope, $http) {
+  var vm = this;
 
-socket.on('disconnect', function() {
-  console.log("Disconnected from Server");
-});
+  $scope.message = {};
+  $scope.messageArray = [];
 
-socket.on('newMessage', function(message) {
-  console.log("New Message: ", message);
-});
+  var socket = io();
+
+  // ---------SOCKET CONNECT AND DISCONNECT---------//
+  socket.on('connect', function() {
+    console.log("Connected to Server");
+  });
+
+  socket.on('disconnect', function() {
+    console.log("Disconnected from Server");
+  });
+  // ---------------------------------------------//
+
+  socket.on('newMessage', function(mes) {
+    $scope.$apply(function() {
+    mes.createdAt = moment(mes.createdAt).format('h:mm a');
+
+      console.log("New Message: ", mes);
+      $scope.messageArray.push(mes);
+    });
+  });
+
+  $scope.submit = function() {
+    socket.emit('createMessage', {
+      from: 'User',
+      text: $scope.message.text
+    }, function() {
+
+    });
+  };
+}]);

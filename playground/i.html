@@ -10,37 +10,42 @@
 
   <title>Document</title>
 </head>
-<body ng-controller='mainController' class="chat">
+<body ng-controller='mainController'>
   <!-- Sidebar -->
-  <div class="chat__sidebar">
+  <div class="wrapper">
     <nav id="sidebar">
-      <h3>People</h3>
-      <div id="users"></div>
+        <div class="sidebar-header">
+            <h3>Bootstrap Sidebar</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Dummy Heading</p>
+            <li>
+                <a href="#">About</a>
+            </li>
+        </ul>
     </nav>
-  </div>
 
     <!-- Page Content -->
-    <div id="content" class="chat__main">
+    <div id="content">
       <p>Welcome to the chat app</p>
 
-      <ol id="messages" class="chat__messages">
-        <li ng-repeat="x in messageArray">{{x.from}} {{x.createdAt}}: {{x.text}}</li>
+      <ol id="messages">
+        <li ng-repeat="x in messageArray">{{x.from}}: {{x.text}}</li>
       </ol>
-      <div class="chat__footer">
-        <form id="message-form">
-          <input name="message" type="text" placeholder="Message..." ng-model='message.text' required/>
-          <button class="btn btn-primary" ng-click="submit()">Send</button>
-        </form>
-        <button id="send-location">Send location</button>
-      </div>
+
+      <form id="message-form">
+        <input name="message" type="text" placeholder="Message..." ng-model='message.text' required/> {{message.text}}
+        <button class="btn btn-primary" ng-click="submit()">Send</button>
+      </form>
     </div>
+  </div>
 
   <script src="/js/libs/angular.js"></script>
   <script src="/js/libs/angular-route.js"></script>
   <script src="/js/libs/bootstrap-js/bootstrap.js"></script>
   <script src="/js/index.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/libs/moment.js"></script>
 
 </body>
 </html>

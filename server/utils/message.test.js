@@ -1,10 +1,11 @@
-const expect = require('expect');
-const generateMessage = require('./message');
+var expect = require('expect');
 
-describe('generateMessage', function() {
-  it('should generate correct message object', function() {
-    var from = "Jen";
-    var text = "Some message";
+var {generateMessage} = require('./message');
+
+describe('generateMessage', () => {
+  it('should generate correct message object', () => {
+    var from = 'Jen';
+    var text = 'Some message';
     var message = generateMessage(from, text);
 
     expect(message.createdAt).toBeA('number');

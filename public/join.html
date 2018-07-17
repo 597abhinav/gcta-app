@@ -1,0 +1,25 @@
+<div ng-controller="joinFormCtrl">
+  <!-- Logo -->
+  <!-- <img src="/img/logo.png" height="15%" width="15%"> -->
+
+  <!-- Join Panel -->
+  <div class="centered-form">
+    <div class="centered-form__form"
+      <form id="join-form" class="join-form" novalidate>
+        <div id="joinMessage">Join a chat!</div>
+        <div id="joinSubtitle">We're so excited to see you again</div>
+        <div class="form-field">
+            <label>DISPLAY NAME</label>
+            <input class="join__input" type="text" ng-model="user.displayName" required/>
+            <!-- <div ng-show="form.firstName.$touched && form.firstName.$invalid">This field is required</div> -->
+        </div>
+        <div class="form-field">
+            <label>ROOM NAME</label>
+            <input class="join__input" type="text" ng-model="user.roomName" required/>
+            <!-- <div ng-show="form.firstName.$touched && form.firstName.$invalid">This field is required</div> -->
+        </div>
+        <a href="chat"><button class="join-button" ng-click="join(user)">Join</button></a>
+      </form>
+    </div>
+  </div>
+</div>

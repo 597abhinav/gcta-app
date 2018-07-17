@@ -2,12 +2,20 @@ const express = require('express');
 const path = require('path');
 const socketIO = require('socket.io');
 const http = require('http');
-
-const {generateMessage} = require('./utils/message.js');
-
 var app = express();
+const mongodb = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017';
+const bodyParser = require('body-parser');
+
+var {generateMessage} = require('./utils/message.js')
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname + './../public')));
+
+// Socket Static Code
 var server = http.createServer(app);
 var io = socketIO(server);
 
@@ -27,6 +35,14 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(port, () => {
+
+// Routes
+app.post('/chat', function(req, res) {
+    console.log("We are successful");
+    console.log(req.body);
+});
+
+// Port Listen
+server.listen(port, function() {
   console.log(`Server running on port ${port}`);
 });

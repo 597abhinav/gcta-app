@@ -5,42 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+  <link rel="stylesheet" href="css/join.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/bootstrap-css/bootstrap.css">
+  <base href="/">
 
-  <title>Document</title>
+  <title>Join | GCTA</title>
 </head>
-<body ng-controller='mainController' class="chat">
-  <!-- Sidebar -->
-  <div class="chat__sidebar">
-    <nav id="sidebar">
-      <h3>People</h3>
-      <div id="users"></div>
-    </nav>
-  </div>
-
-    <!-- Page Content -->
-    <div id="content" class="chat__main">
-      <p>Welcome to the chat app</p>
-
-      <ol id="messages" class="chat__messages">
-        <li ng-repeat="x in messageArray">{{x.from}} {{x.createdAt}}: {{x.text}}</li>
-      </ol>
-      <div class="chat__footer">
-        <form id="message-form">
-          <input name="message" type="text" placeholder="Message..." ng-model='message.text' required/>
-          <button class="btn btn-primary" ng-click="submit()">Send</button>
-        </form>
-        <button id="send-location">Send location</button>
-      </div>
-    </div>
-
+<body>
+  <ng-view></ng-view>
+  <!-- Scripts -->
   <script src="/js/libs/angular.js"></script>
   <script src="/js/libs/angular-route.js"></script>
-  <script src="/js/libs/bootstrap-js/bootstrap.js"></script>
-  <script src="/js/index.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/libs/moment.js"></script>
-
+  <script src="/js/app.js"></script>
 </body>
 </html>

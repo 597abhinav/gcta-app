@@ -19,7 +19,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('joinFormCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('joinFormCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   var vm = this;
 
   vm.user = {};
@@ -27,10 +27,11 @@ app.controller('joinFormCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.join = function(data) {
     console.log(data);
     $http.post('/chat', data);
+    $rootScope.userdetails = data;
   };
 }]);
 
-app.controller('chatCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   var vm = this;
 
   $scope.message = {};
@@ -54,6 +55,14 @@ app.controller('chatCtrl', ['$scope', '$http', function($scope, $http) {
       console.log("New Message: ", mes);
       $scope.messageArray.push(mes);
     });
+  });
+
+  socket.emit('join', $rootScope.userdetails, function (err) {
+    if (err) {
+      alert(err);
+    } else {
+      console.log("No error");
+    }
   });
 
   $scope.submit = function() {

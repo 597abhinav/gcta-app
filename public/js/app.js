@@ -4,7 +4,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $routeProvider
       .when('/', {
             templateUrl: '../join.html',
-            controller: 'joinFormCtrl',
+            controller: 'joinCtrl',
             css: 'css/join.css'
     })
       .when('/chat', {
@@ -18,30 +18,42 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
     $locationProvider.html5Mode(true);
 }]);
-
-app.controller('joinFormCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
-  var vm = this;
-
-  vm.user = {};
-
+app.controller('joinCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   $scope.join = function(data) {
     console.log(data);
-    $http.post('/chat', data);
     $rootScope.userdetails = data;
   };
 }]);
 
 app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   var vm = this;
+  vm.user = {};
 
+  var socket = io();
   $scope.message = {};
   $scope.messageArray = [];
 
-  var socket = io();
-
   // ---------SOCKET CONNECT AND DISCONNECT---------//
-  socket.on('connect', function() {
-    console.log("Connected to Server");
+  socket.on('connect', function () {
+    $scope.$apply(function() {
+      var params = $rootScope.userdetails;
+
+      socket.emit('join', params, function (err) {
+        if (err) {
+          alert(err);
+          window.location.href = '/';
+        } else {
+          console.log('No error');
+        }
+      });
+    });
+  });
+
+  socket.on('updateUserList', function (users) {
+    $scope.$apply(function() {
+      console.log(users);
+      $scope.usersArray = users;
+    });
   });
 
   socket.on('disconnect', function() {
@@ -57,13 +69,7 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
     });
   });
 
-  socket.emit('join', $rootScope.userdetails, function (err) {
-    if (err) {
-      alert(err);
-    } else {
-      console.log("No error");
-    }
-  });
+
 
   $scope.submit = function() {
     socket.emit('createMessage', {

@@ -1,9 +1,15 @@
-<div ng-controller='chatCtrl' class="chat">
+<div class="chat" ng-controller="chatCtrl">
   <!-- Sidebar -->
   <div class="chat__sidebar">
     <nav id="sidebar">
       <h3>People</h3>
-      <div id="users"></div>
+      <div id="users">
+        <ol>
+          <li ng-repeat="y in usersArray track by $index">
+            {{y}}
+          </li>
+        </ol>
+      </div>
     </nav>
   </div>
 

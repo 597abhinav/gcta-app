@@ -7,7 +7,7 @@ const mongodb = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017';
 const bodyParser = require('body-parser');
 
-var {generateMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 var {isRealString} = require('./utils/validation');
 var {Users} = require('./utils/users');
 
@@ -48,6 +48,14 @@ io.on('connection', function(socket) {
     }
 
     callback();
+  });
+
+  socket.on('createLocationMessage', (coords) => {
+    var user = users.getUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+    }
   });
 
   socket.on('disconnect', () => {

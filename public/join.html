@@ -5,20 +5,21 @@
   <!-- Join Panel -->
   <div class="centered-form">
     <div class="centered-form__form"
-      <form id="join-form" class="join-form" novalidate>
+      <form id="join-form" name="joinForm" class="join-form" novalidate>
         <div id="joinMessage">Join a chat!</div>
         <div id="joinSubtitle">We're so excited to see you again</div>
         <div class="form-field">
             <label>DISPLAY NAME</label>
-            <input class="join__input" type="text" ng-model="user.name" required/>
-            <!-- <div ng-show="form.firstName.$touched && form.firstName.$invalid">This field is required</div> -->
+            <input name="username" class="join__input" type="text" ng-model="user.name" required/>
+            <!-- <p ng-show="!joinForm.username.$pristine && joinForm.username.$invalid">This field is required</p> -->
         </div>
         <div class="form-field">
             <label>ROOM NAME</label>
-            <input class="join__input" type="text" ng-model="user.room" required/>
-            <!-- <div ng-show="form.firstName.$touched && form.firstName.$invalid">This field is required</div> -->
+            <input name="roomname" class="join__input" type="text" ng-model="user.room" required/>
+            <!-- <p ng-show="!joinForm.roomname.$pristine && joinForm.roomname.$invalid">This field is required</p> -->
         </div>
-        <a href="chat"><button class="join-button" ng-click="join(user)">Join</button></a>
+        <a href="chat" class="join-anchor" ng-click="join(user)">Join</a>
+        <!-- <button class="join-button" ng-disabled="joinForm.$invalid" onclick="location.href='/chat'" type="button">Join</button> -->
       </form>
     </div>
   </div>

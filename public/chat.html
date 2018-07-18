@@ -26,11 +26,23 @@
           </div>
         </li>
       </ol>
+      <ol id="messages" class="chat__messages">
+        <li ng-repeat="x in locationMessageArray track by $index">
+          <div class="speech-bubble">
+            <div>
+            <span id="sender">{{x.from}}</span>
+            <span id="message-time"> {{x.createdAt}}</span>
+          </div>
+            <span id="text-message">My Current Location</span>
+          </div>
+        </li>
+      </ol>
+
       <div class="chat__footer">
         <form>
-          <input class="message__input" type="text" placeholder="Message..." ng-model='message.text' required/>
+          <input class="message__input" type="text" placeholder="Message..." ng-model='message.text'/>
           <button class="chat__button" ng-click="submit()">Send</button>
-          <button class="chat__button">Send Location</button>
+          <button class="chat__button" ng-click="locationSubmit()">Send Location</button>
         </form>
       </div>
     </div>

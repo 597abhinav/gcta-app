@@ -32,6 +32,7 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
   var socket = io();
   $scope.message = {};
   $scope.messageArray = [];
+  $scope.locationMessageArray = [];
 
   // ---------SOCKET CONNECT AND DISCONNECT---------//
   socket.on('connect', function () {
@@ -40,8 +41,6 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
 
       socket.emit('join', params, function (err) {
         if (err) {
-          alert(err);
-          window.location.href = '/';
         } else {
           console.log('No error');
         }
@@ -69,14 +68,28 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
     });
   });
 
-
+  socket.on('newLocationMessage', function (mes) {
+    $scope.$apply(function() {
+      mes.createdAt = moment(mes.createdAt).format('h:mm a');
+      $scope.locationMessageArray.push(mes);
+    });
+  });
 
   $scope.submit = function() {
     socket.emit('createMessage', {
-      from: 'User',
       text: $scope.message.text
     }, function() {
 
+    });
+  };
+
+  $scope.locationSubmit = function() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position);
+      socket.emit('createMessage', {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
     });
   };
 }]);

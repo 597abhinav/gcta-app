@@ -69,6 +69,29 @@ img {
   background-color: #677bc4;
 }
 
+.join-anchor:link, .join-anchor:visited {
+    background-color: #7289da;
+    width: 100%;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.join-anchor:hover, .join-anchor:active {
+    background-color: #677bc4;
+}
+
+.disabled
+{
+  pointer-events: none;
+  opacity: .5;
+}
+
 .join__input[type=text] {
   display: block;
   width: 100%;
@@ -88,4 +111,11 @@ img {
 .join__input[type=text]:focus {
     border: 1px solid #7289da;
     background-color: #222a3f;
+}
+
+.join__input.ng-touched.ng-invalid {
+    border: 1px solid #F24073;
+}
+.join__input.ng-touched.ng-valid {
+    border: 1px solid #3DF4AE;
 }

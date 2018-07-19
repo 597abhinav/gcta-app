@@ -85,6 +85,7 @@ ol {
   list-style-type: none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  margin-bottom: 0px;
 }
 
 .chat__footer {

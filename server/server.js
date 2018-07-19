@@ -17,6 +17,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname + './../public')));
 
+
+//Tone Analyzer
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+var toneAnalyzer = new ToneAnalyzerV3({
+    url: "https://gateway.watsonplatform.net/tone-analyzer/api",
+    username: "c942eb51-1f43-4d2b-ade7-bd1da1bba8ff",
+    password: "DeOWWjJimQn0",
+    version: '2018-07-09'
+});
+
 // Socket Static Code
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -42,6 +53,20 @@ io.on('connection', function(socket) {
 
   socket.on('createMessage', (message, callback) => {
     var user = users.getUser(socket.id);
+
+    var toneParams = {
+      'tone_input': { 'text': message.text },
+      'content_type': 'application/json'
+    };
+
+    toneAnalyzer.tone(toneParams, function (error, analysis) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(analysis.document_tone.tones[0]);
+        
+      }
+    });
 
     if (user && isRealString(message.text)) {
       io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));

@@ -18,6 +18,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
     $locationProvider.html5Mode(true);
 }]);
+
+
 app.controller('joinCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   $scope.join = function(data) {
     console.log(data);
@@ -26,6 +28,24 @@ app.controller('joinCtrl', ['$rootScope', '$scope', '$http', function($rootScope
 }]);
 
 app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+  function scrollToBottom () {
+  // Selectors
+  var messages = jQuery('#messages');
+  var newMessage = messages.children('li:last-child')
+  // Heights
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight);
+  }
+}
+
+
+
   var vm = this;
   vm.user = {};
 
@@ -65,6 +85,7 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
       mes.createdAt = moment(mes.createdAt).format('h:mm a');
       console.log("New Message: ", mes);
       $scope.messageArray.push(mes);
+      scrollToBottom();
     });
   });
 
@@ -89,6 +110,8 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
       socket.emit('createMessage', {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
+      }, function () {
+          alert('Unable to fetch location.');
       });
     });
   };

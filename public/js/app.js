@@ -61,6 +61,8 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
 
       socket.emit('join', params, function (err) {
         if (err) {
+          alert(err);
+          
         } else {
           console.log('No error');
         }

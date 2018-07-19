@@ -54,6 +54,16 @@ io.on('connection', function(socket) {
   socket.on('createMessage', (message, callback) => {
     var user = users.getUser(socket.id);
 
+    var getColor = function(main_tone) {
+        switch (main_tone) {
+          case "Joy":
+            return "blue"
+          case "Sadness":
+            return "yellow"
+          default:  return "pink"
+        }
+    };
+
     var toneParams = {
       'tone_input': { 'text': message.text },
       'content_type': 'application/json'
@@ -63,7 +73,13 @@ io.on('connection', function(socket) {
       if (error) {
         console.log(error);
       } else {
-        console.log(analysis.document_tone.tones[0]);
+        if (analysis.document_tone.tones[0] === undefined) {
+          console.log("Couldn\'t process the tone of the message");
+        } else {
+          var main_tone = analysis.document_tone.tones[0].tone_name;
+          var color = getColor(main_tone);
+          console.log(color);
+        }
       }
     });
 

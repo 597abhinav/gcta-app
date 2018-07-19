@@ -64,7 +64,6 @@ io.on('connection', function(socket) {
         console.log(error);
       } else {
         console.log(analysis.document_tone.tones[0]);
-        
       }
     });
 

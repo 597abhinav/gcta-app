@@ -28,21 +28,21 @@ app.controller('joinCtrl', ['$rootScope', '$scope', '$http', function($rootScope
 }]);
 
 app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
-  function scrollToBottom () {
-  // Selectors
-  var messages = jQuery('#messages');
-  var newMessage = messages.children('li:last-child')
-  // Heights
-  var clientHeight = messages.prop('clientHeight');
-  var scrollTop = messages.prop('scrollTop');
-  var scrollHeight = messages.prop('scrollHeight');
-  var newMessageHeight = newMessage.innerHeight();
-  var lastMessageHeight = newMessage.prev().innerHeight();
-
-  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
-    messages.scrollTop(scrollHeight);
-  }
-}
+//   function scrollToBottom () {
+//   // Selectors
+//   var messages = jQuery('#messages');
+//   var newMessage = messages.children('li:last-child')
+//   // Heights
+//   var clientHeight = messages.prop('clientHeight');
+//   var scrollTop = messages.prop('scrollTop');
+//   var scrollHeight = messages.prop('scrollHeight');
+//   var newMessageHeight = newMessage.innerHeight();
+//   var lastMessageHeight = newMessage.prev().innerHeight();
+//
+//   if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+//     messages.scrollTop(scrollHeight);
+//   }
+// }
 
 
 
@@ -85,7 +85,7 @@ app.controller('chatCtrl', ['$rootScope', '$scope', '$http', function($rootScope
       mes.createdAt = moment(mes.createdAt).format('h:mm a');
       console.log("New Message: ", mes);
       $scope.messageArray.push(mes);
-      scrollToBottom();
+      // scrollToBottom();
     });
   });
 

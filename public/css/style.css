@@ -42,13 +42,41 @@ ol {
   padding: 5px 10px 5px 10px;
 }
 /* .speech-bubble:after { content: ''; position: absolute; left: 0; top: 50%; width: 0; height: 0; border: 18px solid transparent; border-right-color: #1e6d9d; border-left: 0; border-top: 0; margin-top: -65px; margin-left: -18px; } */
+.scrollbar {
+    background-color: #F5F5F5;
+    float: left;
+    height: 300px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    margin-top: 40px;
+    width: 65px;
+    overflow-y: scroll;
+}
+
+.force-overflow {
+    min-height: 450px;
+}
+
+#style-1::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+
+#style-1::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
 
 .chat {
   display: flex;
 }
 
 .chat__sidebar {
-  background: #29334C;
+  background: #384566;
   /* overflow-y: scroll; */
   width: 260px;
   height: 100vh;
@@ -67,7 +95,7 @@ ol {
 .chat__sidebar li {
   background: #e6eaee;
   border: 1px solid #e1e1e1;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   padding: 10px;
   margin: 10px;
 }
